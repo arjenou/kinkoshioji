@@ -1,0 +1,306 @@
+* {padding: 0;margin: 0;}
+
+body {
+	font-family:'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+	background-color: rgba(0,0,0,0.1);
+}
+
+#page {
+	width: 100%;
+	margin: 0 auto;
+}
+
+.page_bak {
+}
+.title_bak {
+	width: 100%;
+	margin: 0 auto;
+	height: 420px;
+	background-image: url("../img/slider/bak04.jpg");
+	background-repeat: no-repeat;
+	background-position: center top;
+
+	-moz-background-size:100% auto; /* 画面にサイズ合わせる */
+	background-size:100% auto; 
+}
+
+/* ヘッダー */
+.full_wide {
+	width: 100%;
+	margin: 0 auto;
+	background-color: rgba(255,255,255,0.6);
+}
+
+.head_page {
+	width: 1200px;
+	margin: 0 auto;
+}
+
+#head_left {
+	float: left;
+}
+
+#head_left img {
+	margin: 20px 0;
+}
+
+/* メニュー */
+#head_right {
+	float: right;
+	padding-top: 10px;
+}
+
+#head_right ul {
+	list-style-type: none;
+}
+
+#head_right li {
+	float: left;
+	width: 200px;
+}
+
+/* マウスオーバー */
+#head_right a:hover img {
+	opacity: 0.6;
+	filter: alpha(opacity=60);
+	-moz-opacity: 0.6;
+}
+
+#head_submenu,#submenu a:hover img {
+	opacity: 0.6;
+	filter: alpha(opacity=60);
+	-moz-opacity: 0.6;
+}
+
+
+
+/* メニュー */
+#main_menu {
+	width: 100%;
+	margin: 0 auto;
+	text-align: center;
+	background: repeating-linear-gradient(-45deg, #000, #000 1px, #333 4px, #333 3px);
+}
+#menu_box {
+	width: 1280px;
+	margin: 0 auto;
+}
+
+ul {
+	list-style-type: none;
+	text-align: center;
+}
+li.topmenu {
+	display: -moz-inline-box;
+	display: inline-block;
+	/display: inline;
+	/zoom: 1; 
+}
+li.topmenu img {
+	padding: 20px 8px 15px;
+}
+/* マウスオーバー */
+#main_menu a:hover img {
+	opacity: 0.6;
+	filter: alpha(opacity=60);
+	-moz-opacity: 0.6;
+}
+
+
+
+#main {
+	width: 1300px;
+	margin: 0 auto;
+	padding: 0 0;
+	text-align: left;
+	background-color: #fff;
+}
+#main_box {
+	width: 100%;
+	margin-top: 30px;
+	padding: 20px 0px;
+	border:1px solid #CCC;
+	background-color: rgba(255,255,255,1);
+}
+/* 地図、問い合わせ情報 */
+#left_area {
+	float: left;
+	width: 320px;
+	margin-top: 20px;
+	text-align: center;
+}
+#map_box {
+	width: 288px;
+	height: 314px;
+	border:solid 4px #183D61;
+	padding-top: 7px;
+	padding-bottom: 10px;
+	margin: 20px auto;
+}
+#map {
+	width: 264px;
+	height: 264px;
+	margin: 0 auto;
+}
+/* メインエリア */
+#main_area {
+	float: left;
+	width: 900px;
+	padding: 30px 0 0 35px;
+}
+
+/* 取扱い品目 */
+#main_goods {
+}
+#goods_box {
+	width: 880px;
+	padding: 0 0 100px 0;
+	text-align: left;
+}
+
+#goods_box p {
+	font-size: 100%;
+	line-height: 140%;
+}
+
+.goods_tbl {
+	border-spacing: 20px;
+	text-align: left;
+	vertical-align: top;
+}
+.goods_tbl img {
+	margin-bottom: 4px;
+}
+/* 区切り */
+.section_lin {
+	width: 98%;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	border-top:3px dotted #2F5973;
+}
+.section_lin3 {
+	width: 100%;
+	height: 5px;
+	margin: 0 auto;
+	background-color: rgba(47,89,115,1.0);
+}
+
+/* マウスオーバー */
+.goods_tbl a:hover img {
+	opacity: 0.6;
+	filter: alpha(opacity=60);
+	-moz-opacity: 0.6;
+}
+
+
+
+
+
+/* バナーメニュー */
+.menubn_box {
+	float: left;
+	margin-bottom: 72px;
+	padding: 30px 30px 0 0;
+	text-align: left;
+	font-size: 100%;
+}
+
+.menubn_tit {
+	padding: 5px 15px;
+	border-left: solid 8px #F21905;
+	text-align: left;
+	font-size: 130%;
+}
+
+
+
+
+
+
+
+
+
+
+#foot {
+	width: 100%;
+	background: linear-gradient(180deg, #000, #666);
+	padding: 10px 0 0 0;
+}
+
+/* サブメニュー */
+#sub {
+	width: 980px;
+	margin: 0 auto;
+	padding: 0 0 24px 0;
+}
+
+.sub_menu_tbl {
+	margin: 0 auto;
+}
+
+.sub_menu_tbl td {
+	width: 184px;
+	vertical-align: top;
+	text-align: left;
+}
+
+.sub_menu_tbl p {
+	font-size: 90%;
+	line-height: 240%;
+}
+
+.sub_menu_tbl a {
+	text-decoration: none;
+	color: #FFF;
+}
+
+
+#office {
+	width: 980px;
+	margin: 0 auto;
+	text-align: center;
+	padding:24px 0 8px 0;
+	font-size: 15px;
+	color: #fff;
+}
+
+.copyright{
+	font-size:90%;
+	color: #ffffff;
+	text-align: center;
+}
+
+/* ページトップへ */
+#pagetop{
+    position:fixed;
+    right:50px;
+    bottom:15px;
+    cursor:pointer;
+}
+
+/* ******************************** */
+
+.dummy-foot {
+	clear: both;
+	width: 100%;
+}
+
+p {
+	font-size: 90%;
+	line-height: 140%;
+}
+
+a {
+	text-decoration: none;
+	color: #000;
+}
+
+a:hover {
+	text-decoration: none;
+	color: #CCC;
+}
+
+a img {
+    border-style:none;
+}
+

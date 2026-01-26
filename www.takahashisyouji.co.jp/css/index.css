@@ -1,0 +1,571 @@
+* {padding: 0; margin: 0;}
+
+body {
+	font-family:'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+	background-color: rgba(0,0,0,0.1);
+
+	-webkit-text-size-adjust: 100%;
+}
+
+#page {
+	width: 100%;
+	margin: 0 auto;
+}
+
+/* スライダー */
+.page_bak {
+	height: 640px;
+	width: 100%;
+/*	background-color: #FFF;*/
+	background-position: top;
+	background-repeat: no-repeat;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	margin-bottom: 45px;
+}
+
+
+
+.head_tit, .head_tit2 {
+	width: 100%;
+	margin: 8px auto 0 auto;
+	text-align: center;
+}
+.head_tit {
+	background-color: rgba(255,255,255,0.8);
+}
+.head_tit3 {
+  width: 1000px;
+/*  margin: 60px auto 93px; ～2025.9 */
+  margin: 40px auto 0;
+  text-align: center;
+  background-color: rgba(241,241,241,1);
+/*  background-color: #fff;*/
+  border-radius: 40px;
+}
+.head_tit4 {
+  width: 700px;
+  margin: 25px auto 25px;
+  padding: 8px 5px;
+  text-align: center;
+  background-color: rgba(250,220,0,1);
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 4px rgba(250,220,0,1);
+}
+
+.head_tit img {
+	margin: 40px 0 13px 0;
+}
+.head_tit2 img {
+	margin: 22px 0 0px 0;
+}
+.head_tit3 img {
+	margin: 10px 0;
+}
+
+
+
+/* メニュー */
+#main_menu {
+	width: 100%;
+	margin: 0 auto;
+	text-align: center;
+	background: repeating-linear-gradient(-45deg, #000, #000 1px, #333 4px, #333 3px);
+/*	background-image: linear-gradient(#fff,#000);*/
+/*	background-image: url("../img/soz/009.gif");*/
+/*	background-color: rgba(0,0,0,1);*/
+}
+#menu_box {
+	width: 1280px;
+	margin: 0 auto;
+}
+
+ul {
+	list-style-type: none;
+	text-align: center;
+}
+li.topmenu {
+	display: -moz-inline-box;
+	display: inline-block;
+	/display: inline;
+	/zoom: 1; 
+}
+li.topmenu img {
+/*	padding: 20px 15px 10px 20px;*/
+	padding: 20px 5px 10px 10px;
+}
+/* マウスオーバー */
+#main_menu a:hover img {
+	opacity: 0.6;
+	filter: alpha(opacity=60);
+	-moz-opacity: 0.6;
+}
+
+
+#main {
+	width: 1300px;
+	margin: 0 auto;
+}
+#main_box {
+	width: 100%;
+	padding: 30px 0px;
+	border:1px solid #CCC;
+	background-color: rgba(255,255,255,1);
+}
+#main_area {
+	float: left;
+	width: 680px;
+/*	padding: 10px 0 0 10px;*/
+	padding: 0 0 0 10px;
+}
+
+/* 説明部 */
+#main_msg {
+/*	padding: 0 15px 0 20px;*/
+	padding: 0 30px 0 20px;
+}
+#main_msg img {
+	padding-bottom: 25px;
+}
+#main_msg p {
+	font-size: 100%;
+	line-height: 140%;
+}
+
+
+/* お知らせエリア */
+/* スマホ対策 */
+#info_box {
+	padding-left: 30px;
+}
+#info_box h2 {
+	font-size: 130%;
+	line-height: 200%;
+	color: #336600;
+}
+.iframe_wrap {
+ 	margin: 0 0 0 30px;
+	position: relative;
+	width: 600px;
+	padding: calc(700/600 * 100%) 0 0;
+/*	padding: calc(430/600 * 100%) 0 0;*/
+/*	padding: calc(260/600 * 100%) 0 0;*/
+	border: 1px #999 solid;
+	overflow: auto;
+
+	-webkit-overflow-scrolling:touch;
+
+}
+.iframe_wrap iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 98%;
+}
+
+
+
+#right_area {
+	float: right;
+	padding-right: 10px;
+}
+.right_area_img {
+	float: left;
+}
+.right_area_tit {
+	width: 200px;
+	float: left;
+	margin: 0 0 0 15px;
+	font-size: 100%;
+}
+.right_area_tit_ue {
+	margin: 0 0 10px 0;
+	padding: 7px 20px;
+	border-left: solid 12px #336600;
+	text-align: left;
+	font-size: 125%;
+}
+
+
+.promotion_box {
+  padding-top: 15px;
+}
+
+
+
+.tit_line_b {
+	width: 100%;
+	margin: 20px auto;
+	padding: 15px 0;
+	text-align: center;
+	color: #FFF;
+}
+.tit_line_b {
+	background: linear-gradient(180deg, #000, #333);
+}
+.tit_line_b h1 {
+	font-size: 18px;
+} 
+.description {
+	padding: 15px 80px;
+	text-align: left;
+	font-size: 110%;
+}
+.description2 {
+	margin: -7px 0 0 0;
+	padding: 5px 20px 10px 80px;
+	text-align: left;
+	font-size: 110%;
+	background-color: rgba(255,255,255,1);
+}
+.description3 {
+	padding: 0 0 80px 0;
+	text-align: center;
+	background-color: rgba(255,255,255,1);
+}
+.description3 img {
+	padding: 5px 3px;
+}
+
+
+
+
+
+
+/* 買取価格表 */
+#kaitori_k {
+	width: 100%;
+	text-align: center;
+	border:1px solid #CCC;
+}
+
+.kaitori_if {
+	margin: 0;
+	width: 100%;
+	height: 3850px;
+	border: 0;
+	scrolling: no;
+	overflow-x: hidden;
+	overflow-y: hidden;
+}
+
+
+
+
+
+
+
+
+
+
+
+#foot {
+	width: 100%;
+	background: linear-gradient(180deg, #000, #666);
+	padding: 10px 0 0 0;
+}
+
+/* サブメニュー */
+#sub {
+	width: 980px;
+	margin: 0 auto;
+	padding: 0 0 24px 0;
+}
+
+.sub_menu_tbl {
+	margin: 0 auto;
+}
+
+.sub_menu_tbl td {
+	width: 184px;
+	vertical-align: top;
+	text-align: left;
+}
+
+.sub_menu_tbl p {
+	font-size: 90%;
+	line-height: 240%;
+}
+
+.sub_menu_tbl a {
+	text-decoration: none;
+	color: #FFF;
+}
+
+
+#office {
+	width: 980px;
+	margin: 0 auto;
+	text-align: center;
+	padding:24px 0 8px 0;
+	font-size: 15px;
+	color: #fff;
+}
+
+.copyright{
+	font-size:90%;
+	color: #ffffff;
+	text-align: center;
+}
+
+/* ページトップへ */
+#pagetop{
+	position:fixed;
+	right:50px;
+	bottom:15px;
+	cursor:pointer;
+}
+
+/* ******************************** */
+
+.dummy-foot {
+	clear: both;
+	width: 100%;
+}
+
+p {
+	font-size: 90%;
+	line-height: 140%;
+}
+
+a {
+	text-decoration: none;
+	color: #000;
+}
+
+a:hover {
+	text-decoration: none;
+	color: #CCC;
+}
+
+a img {
+	border-style:none;
+}
+
+
+/* 営業時間 */
+.open_tbl {
+	width: 600px;
+	margin: 0 0 30px 0;
+	border-collapse: collapse;
+	border: #336600 1px solid;
+}
+.t_th {
+	padding: 5px 0;
+	text-align: center;
+	background-color: #336600;
+	color: #fff;
+	letter-spacing: 0.5em;
+	font-weight: normal;
+	font-size: 19px;
+}
+.t_th span {
+	margin-right: -0.5em;
+}
+.t_left {
+	width: 230px;
+	padding: 20px 0;
+	text-align: center;
+	background-color: #fff;
+	font-weight: bold;
+	color: #262626;
+	font-size: 18px;
+}
+.t_right {
+	text-align: left;
+	background-color: #fff;
+	font-weight: bold;
+	color: #262626;
+	font-size: 18px;
+}
+.t_right span.aka {
+	color: #f00;
+}
+.t_right span.teikyu {
+	font-weight: normal;
+	font-size: 13px;
+}
+
+
+
+
+/* 高価現金買取・多品目買取可能 */
+#tokucho_box {
+	width: 100%;
+	margin-top: 10px;
+	padding: 30px 0 40px;
+	border:1px solid #CCC;
+	background-color: rgba(255,255,255,1);
+}
+.tokucho {
+	width: 620px;
+	float: left;
+	text-align: center;
+	padding: 0 5px 0 15px;
+/*	padding-left: 18px;*/
+}
+.toku_left {
+	width: 330px;
+	float: left;
+	padding: 20px 0 0;
+	text-align: left;
+}
+.toku_left p {
+	font-size: 100%;
+	line-height: 140%;
+}
+.toku_right {
+/*	width: 300px;*/
+	float: left;
+	text-align: left;
+}
+.toku_right img {
+	margin: 20px 0 0 10px;
+}
+.tokucho h3 {
+	font-size: 20px;
+	color: #f90;
+	padding: 15px 0;
+	border-top: solid 3px #f90;
+	border-bottom: solid 3px #f90;
+}
+
+
+/* 鉄製コンテナ */
+#iron_box {
+  width: 100%;
+  margin-top: 10px;
+  padding: 30px 0 40px;
+  border:1px solid #CCC;
+  background-color: rgba(255,255,255,1);
+}
+.iron {
+  text-align: center;
+}
+.iron_left {
+  float: left;
+}
+.iron_left img {
+	margin: 0 20px 0 30px;
+}
+.iron_center {
+	width: 300px;
+	float: left;
+	margin: 20px 10px 0;
+	text-align: left;
+}
+.iron_center p {
+	font-size: 100%;
+	line-height: 1.5;
+}
+.iron_right {
+	float: left;
+}
+.iron_right img {
+	margin: 0 5px 0 0;
+}
+.iron_right img:last-child {
+	margin: 0;
+}
+
+
+/* 電子部品 */
+#electronic_box {
+  width: 100%;
+  margin-top: 10px;
+  padding: 30px 0 40px;
+  border:1px solid #CCC;
+  background-color: rgba(255,255,255,1);
+}
+.electronic {
+/*	width: 800px;*/
+  text-align: center;
+/*	padding: 0 5px 0 15px;*/
+/*	padding-left: 18px;*/
+}
+.electronic_left {
+  width: 780px;
+  float: left;
+}
+.electronic_left h4 {
+	font-size: 20px;
+	color: #360;
+	padding: 0 0 15px;
+/*	border-top: solid 3px #f90;
+	border-bottom: solid 3px #f90;*/
+}
+.electronic_right {
+	width: 420px;
+	float: left;
+	margin: 20px 10px 0;
+	text-align: left;
+}
+.electronic_right p {
+	font-size: 100%;
+	line-height: 1.5;
+}
+.electronic_tbl {
+	width: 100%;
+	border-spacing: 0px;
+}
+.electronic_tbl td {
+  font-size: 18px;
+/*  font-weight: bold;*/
+  text-align: center;
+}
+.electronic_tbl img {
+  margin: 5px 0;
+}
+
+
+
+/* 県内拠点事業所・溶接工場 */
+#kyoten_box {
+  width: 100%;
+  margin-top: 10px;
+  padding: 30px 0 40px;
+  border:1px solid #CCC;
+  background-color: rgba(255,255,255,1);
+}
+#kyoten_box h3 {
+/*	color: #336600;*/
+	padding: 10px 0 30px;
+/*	border-top: solid 3px #336600;
+	border-bottom: solid 3px #336600;*/
+}
+.kyoten {
+  margin: 0 0 20px;
+  text-align: center;
+}
+.kyoten p {
+  text-align: left;
+  padding-left: 30px;
+  font-size: 15px;
+  line-height: 1.1;
+}
+.kyoten_left {
+  float: left;
+}
+.kyoten_left img {
+	margin: 0 0 7px 25px;
+}
+
+/* テキスト重ねる */
+.box{
+  position: relative;
+}
+.bottom-left {
+  position: absolute;
+  bottom: 20px;
+  left: 10px;
+  color: #fff;
+  font-weight: 600;
+
+  filter: drop-shadow(2px 2px 1px #000);
+}
+.bottom-left span {
+  font-size: 18px;
+}

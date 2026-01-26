@@ -1,0 +1,325 @@
+* {padding: 0;margin: 0;}
+
+body {
+	font-family:'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+	background-color: rgba(0,0,0,0.1);
+}
+
+#page {
+	width: 100%;
+	margin: 0 auto;
+}
+
+.page_bak {
+}
+.title_bak {
+	width: 100%;
+	margin: 0 auto;
+	height: 420px;
+	background-image: url("../img/slider/bak02.jpg");
+	background-repeat: no-repeat;
+	background-position: center top;
+
+	-moz-background-size:100% auto; /* 画面にサイズ合わせる */
+	background-size:100% auto; 
+}
+
+/* ヘッダー */
+.full_wide {
+	width: 100%;
+	margin: 0 auto;
+	background-color: rgba(255,255,255,0.6);
+}
+
+.head_page {
+	width: 1200px;
+	margin: 0 auto;
+}
+
+#head_left {
+	float: left;
+}
+
+#head_left img {
+	margin: 20px 0;
+}
+
+/* メニュー */
+#head_right {
+	float: right;
+	padding-top: 10px;
+}
+
+#head_right ul {
+	list-style-type: none;
+}
+
+#head_right li {
+	float: left;
+	width: 200px;
+}
+
+/* マウスオーバー */
+#head_right a:hover img {
+	opacity: 0.6;
+	filter: alpha(opacity=60);
+	-moz-opacity: 0.6;
+}
+
+#head_submenu,#submenu a:hover img {
+	opacity: 0.6;
+	filter: alpha(opacity=60);
+	-moz-opacity: 0.6;
+}
+
+
+
+/* メニュー */
+#main_menu {
+	width: 100%;
+	margin: 0 auto;
+	text-align: center;
+	background: repeating-linear-gradient(-45deg, #000, #000 1px, #333 4px, #333 3px);
+}
+#menu_box {
+	width: 1280px;
+	margin: 0 auto;
+}
+
+ul {
+	list-style-type: none;
+	text-align: center;
+}
+li.topmenu {
+	display: -moz-inline-box;
+	display: inline-block;
+	/display: inline;
+	/zoom: 1; 
+}
+li.topmenu img {
+	padding: 20px 8px 15px;
+}
+/* マウスオーバー */
+#main_menu a:hover img {
+	opacity: 0.6;
+	filter: alpha(opacity=60);
+	-moz-opacity: 0.6;
+}
+
+
+
+#main {
+	width: 1300px;
+	margin: 0 auto;
+	text-align: left;
+}
+#main_box {
+	width: 100%;
+	margin-top: 30px;
+	padding: 20px 0px;
+	border:1px solid #CCC;
+	background-color: rgba(255,255,255,1);
+}
+/* 地図、問い合わせ情報 */
+#left_area {
+	float: left;
+	width: 320px;
+	margin-top: 20px;
+	text-align: center;
+}
+#map_box {
+	width: 288px;
+	height: 314px;
+	border:solid 4px #183D61;
+	padding-top: 7px;
+	padding-bottom: 10px;
+	margin: 20px auto;
+}
+#map {
+	width: 264px;
+	height: 264px;
+	margin: 0 auto;
+}
+/* メインエリア */
+#main_area {
+	float: left;
+	width: 900px;
+	padding: 30px 0 0 35px;
+}
+
+/* 事業所案内 */
+#main_msg {
+}
+
+#msg_left {
+	width: 500px;
+	float: left;
+	padding: 0 10px 0 0;
+	text-align: left;
+}
+#msg_left p {
+	font-size: 100%;
+	line-height: 140%;
+}
+#msg_right {
+	width: 350px;
+	float: left;
+	text-align: center;
+	padding: 8px 0;
+}
+.img_box {
+	float: left;
+	margin-bottom: 72px;
+	padding: 16px 16px 0 8px;
+	text-align: left;
+}
+
+
+/* 本社、甲府、八田、白根 */
+#jgs_area {
+	float: left;
+	width: 850px;
+	padding: 16px 0px 100px 10px;
+}
+.jgs_tit {
+	margin-left: 30px;
+}
+.jgs_tit_l {
+	float: left;
+	margin-top: 20px;
+	margin-bottom: 15px;
+	padding: 10px 0 10px 20px;
+	border-left: solid 12px #F21905;
+	text-align: left;
+	font-size: 22px;
+}
+.jgs_tit_l span {
+	font-size: 15px;
+}
+
+.jgs_tit_r {
+	float: left;
+	margin-top: 20px;
+	margin-bottom: 15px;
+	padding: 10px 0 0 30px;
+	text-align: left;
+	font-size: 17px;
+}
+.jgs_map {
+	width: 744px;
+	height: 300px;
+	border:solid 1px #ccc;
+	text-align: left;
+	padding: 5px;
+	margin-left: 24px;
+	margin-bottom: 16px;
+}
+#map_honsha,#map_kofu,#map_hatta,#map_shirane,#map_fujikawa,#map_yousetsu {
+	width: 744px;
+	height: 300px;
+	margin: 0 auto;
+}
+.jgs_img {
+	width: 744px;
+	text-align: left;
+	margin-left: 24px;
+}
+
+
+
+.annai {
+	width: 754px;
+	border:solid 1px #ccc;
+	text-align: center;
+	margin-left: 24px;
+	margin-bottom: 40px;
+}
+.annai img {
+	margin: 20px;
+}
+
+
+
+#foot {
+	width: 100%;
+	background: linear-gradient(180deg, #000, #666);
+	padding: 10px 0 0 0;
+}
+
+/* サブメニュー */
+#sub {
+	width: 980px;
+	margin: 0 auto;
+	padding: 0 0 24px 0;
+}
+
+.sub_menu_tbl {
+	margin: 0 auto;
+}
+
+.sub_menu_tbl td {
+	width: 184px;
+	vertical-align: top;
+	text-align: left;
+}
+
+.sub_menu_tbl p {
+	font-size: 90%;
+	line-height: 240%;
+}
+
+.sub_menu_tbl a {
+	text-decoration: none;
+	color: #FFF;
+}
+
+
+#office {
+	width: 980px;
+	margin: 0 auto;
+	text-align: center;
+	padding:24px 0 8px 0;
+	font-size: 15px;
+	color: #fff;
+}
+
+.copyright{
+	font-size:90%;
+	color: #ffffff;
+	text-align: center;
+}
+
+/* ページトップへ */
+#pagetop{
+    position:fixed;
+    right:50px;
+    bottom:15px;
+    cursor:pointer;
+}
+
+/* ******************************** */
+
+.dummy-foot {
+	clear: both;
+	width: 100%;
+}
+
+p {
+	font-size: 90%;
+	line-height: 140%;
+}
+
+a {
+	text-decoration: none;
+	color: #000;
+}
+
+a:hover {
+	text-decoration: none;
+	color: #CCC;
+}
+
+a img {
+    border-style:none;
+}
+

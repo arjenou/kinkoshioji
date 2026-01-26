@@ -1,0 +1,150 @@
+/* 買取価格 */
+
+* {padding:0px; margin:0px;}
+
+body {
+	font-family:'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+	background-color: rgba(255,255,255,1);
+}
+
+#page {
+	width: 100%;
+	margin: 0 auto;
+}
+
+
+.main {
+	width: 1200px;
+	margin: 0 auto;
+	padding: 15px;
+}
+
+/* 買取価格情報 */
+.kaitori_box {
+	float: left;
+	width: 288px;
+	margin: 15px 10px 10px 0;
+	padding: 10px 0px;
+	text-align: left;
+	border:1px solid #CCC;
+/*	border:1px solid #F21905; */
+}
+.kaitori_item {
+	width: 246px;
+	text-align: left;
+	margin: 0 20px;
+	padding: 7px 10px;
+	font-size: 105%;
+	border-left: solid 8px #F21905;
+}
+.kaitori_img {
+	margin: 5px 0 0 20px;
+}
+
+.kanou {
+	font-size: 13px;
+}
+
+.price_box_ari,.price_box_nashi {
+	width: 228px;
+	height: 28px;
+	margin: 5px 20px;
+	padding: 7px 10px;
+	text-align: right;
+}
+.price_box_ari {
+	background-color: rgba(255,0,0,0.9);
+}
+.price_box_nashi {
+	background-color: rgba(0,0,0,0.2);
+}
+
+.henko_nashi {
+	color: #000;
+	font-weight: bold;
+	font-size: 120%;
+}
+.henko_ari {
+	color: #FFF;
+	font-weight: bold;
+	font-size: 120%;
+}
+.henko_car_nashi {
+	color: #000;
+	font-size: 110%;
+}
+.henko_car_ari {
+	color: #F21905;
+	font-size: 110%;
+}
+
+.leftbox {
+	float: left;
+	width: 50px;
+	text-align: left;
+	padding-top: 6px;
+	padding-left: 10px;
+}
+.rightbox {
+	float: right;
+	width: 150px;
+	text-align: right;
+}
+
+
+.tit_line {
+	width: 100%;
+	margin: 0px auto;
+	padding: 15px 0;
+	text-align: center;
+/*	background: linear-gradient(180deg, #f33, #f99); */
+/*	background: linear-gradient(180deg, #360, #9c6); */
+	background: linear-gradient(180deg, #000, #333);
+	color: #FFF;
+}
+.tit_line h1 {
+	font-size: 18px;
+} 
+.kaitori_box_wide {
+	float: left;
+	width: 550px;
+	margin: 15px 10px 10px 0;
+	padding: 10px 20px;
+	text-align: left;
+	line-height: 190%;
+/*	border:1px solid #CCC; */
+}
+.kaitori_box_wide2 {
+	float: left;
+	width: 900px;
+	margin: 15px 10px 10px 0;
+	padding: 10px 20px;
+	text-align: left;
+	line-height: 190%;
+/*	border:1px solid #CCC; */
+}
+
+.red { color: #F00;}
+
+
+/* ******************************** */
+
+.dummy-foot {
+	clear: both;
+	width: 100%;
+}
+
+a {
+	text-decoration: none;
+	color: #000;
+}
+
+a:hover {
+	text-decoration: underline;
+	color: #CCC;
+}
+
+a img {
+    border-style:none;
+}
+
