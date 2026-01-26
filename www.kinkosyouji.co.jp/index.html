@@ -20,6 +20,18 @@
 <link href="css/index.css" rel="stylesheet" type="text/css" >
 
 <style>
+/* 防止横向滚动 */
+html, body {
+	overflow-x: hidden;
+	max-width: 100%;
+}
+
+body {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
 /* 导航栏悬停效果 */
 nav a:hover {
 	color: #0066cc !important;
@@ -27,6 +39,19 @@ nav a:hover {
 
 /* 移动端响应式导航 */
 @media (max-width: 768px) {
+	html, body {
+		overflow-x: hidden !important;
+		max-width: 100vw !important;
+		width: 100% !important;
+	}
+	
+	#page, #main, #main_box {
+		overflow-x: hidden !important;
+		max-width: 100vw !important;
+		width: 100% !important;
+		box-sizing: border-box !important;
+	}
+	
 	nav {
 		position: fixed !important;
 		top: 0 !important;
@@ -34,12 +59,15 @@ nav a:hover {
 		right: 0 !important;
 		z-index: 1000 !important;
 		padding: 10px 0 !important;
+		width: 100% !important;
+		box-sizing: border-box !important;
 	}
 	
 	nav > div {
 		flex-direction: column !important;
 		padding: 0 15px !important;
 		gap: 10px !important;
+		box-sizing: border-box !important;
 	}
 	
 	nav > div > div {
