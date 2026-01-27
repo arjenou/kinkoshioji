@@ -225,7 +225,7 @@ li.topmenu img {
 .description2 {
 	max-width: 1200px;
 	margin: -7px auto 0;
-	padding: 5px 60px 10px;
+	padding: 0 60px 10px;
 	text-align: left;
 	font-size: 110%;
 	background-color: rgba(255,255,255,1);
@@ -259,7 +259,7 @@ li.topmenu img {
 	margin: 0 auto;
 	width: 100%;
 	max-width: 1200px;
-	height: 3850px;
+	height: 3200px;
 	border: 0;
 	scrolling: no;
 	overflow-x: hidden;
