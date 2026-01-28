@@ -3,7 +3,7 @@
  * Fetches products from Cloudflare Workers API and displays them
  */
 
-const API_URL = 'https://api.kinkoshioji.com';
+const API_URL = 'https://api.kinkosyouji.co.jp';
 
 async function loadProducts() {
   try {
