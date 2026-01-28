@@ -41,6 +41,13 @@ body {
 	margin: 5px 0 0 20px;
 }
 
+.kaitori_img img {
+	width: 248px;
+	height: 120px;
+	object-fit: cover;
+	display: block;
+}
+
 .kanou {
 	font-size: 13px;
 }

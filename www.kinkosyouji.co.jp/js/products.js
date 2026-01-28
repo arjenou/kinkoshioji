@@ -53,7 +53,7 @@ function createProductCard(product) {
       <div class="kaitori_img">
         <img alt="${product.nameJa || product.name}" src="${imageUrl}" width="248" height="120" 
              onerror="this.onerror=null; this.src='${placeholderSvg}'"
-             style="object-fit: cover; background-color: #f5f5f5;">
+             style="width: 248px; height: 120px; object-fit: cover; background-color: #f5f5f5; display: block;">
       </div>
       <div class="${priceBoxClass}">
         ${newPriceBadge}
