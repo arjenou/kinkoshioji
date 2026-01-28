@@ -186,7 +186,18 @@ export default {
           return errorResponse('productIds must be an array', 400);
         }
 
-        const products = await getProducts(env);
+        // 直接读取原始数据（不排序）
+        let products: Product[];
+        try {
+          const object = await env.PRODUCTS_BUCKET.get('products.json');
+          if (!object) {
+            return errorResponse('No products found', 404);
+          }
+          const text = await object.text();
+          products = JSON.parse(text);
+        } catch (error) {
+          return errorResponse('Failed to read products', 500);
+        }
         
         // 更新每个商品的 order
         productIds.forEach((id: string, index: number) => {
@@ -197,12 +208,20 @@ export default {
           }
         });
 
+        // 为没有 order 的商品设置默认值
+        products.forEach((product, index) => {
+          if (product.order === undefined) {
+            product.order = productIds.length + index;
+          }
+        });
+
         // 重新排序并保存
         products.sort((a, b) => (a.order || 0) - (b.order || 0));
         await saveProducts(products, env);
         
         return jsonResponse({ success: true, products });
       } catch (error) {
+        console.error('Reorder error:', error);
         return errorResponse('Invalid request body', 400);
       }
     }
