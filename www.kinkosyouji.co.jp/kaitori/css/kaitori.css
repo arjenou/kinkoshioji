@@ -27,18 +27,31 @@ body {
 	padding: 10px 0px;
 	text-align: left;
 	border:1px solid #CCC;
+	display: flex;
+	flex-direction: column;
 /*	border:1px solid #F21905; */
 }
 .kaitori_item {
 	width: 246px;
 	text-align: left;
-	margin: 0 20px;
+	margin: 0 20px 5px 20px;
 	padding: 7px 10px;
 	font-size: 105%;
 	border-left: solid 8px #F21905;
+	flex-shrink: 0;
 }
 .kaitori_img {
-	margin: 5px 0 0 20px;
+	margin: 0 0 5px 20px;
+	width: 248px;
+	flex-shrink: 0;
+}
+
+.kaitori_img img {
+	display: block;
+	width: 100%;
+	max-width: 248px;
+	height: 120px;
+	object-fit: cover;
 }
 
 .kanou {
@@ -48,9 +61,11 @@ body {
 .price_box_ari,.price_box_nashi {
 	width: 228px;
 	height: 28px;
-	margin: 5px 20px;
+	margin: 5px 20px 0 20px;
 	padding: 7px 10px;
 	text-align: right;
+	margin-top: auto;
+	flex-shrink: 0;
 }
 .price_box_ari {
 	background-color: rgba(255,0,0,0.9);
