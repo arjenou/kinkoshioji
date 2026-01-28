@@ -21,9 +21,22 @@ function formatPrice(price) {
 }
 
 function createProductCard(product) {
-  const imageUrl = product.imageUrl.startsWith('http') 
-    ? product.imageUrl 
-    : `${API_URL}${product.imageUrl}`;
+  // 处理图片 URL
+  let imageUrl = product.imageUrl || '';
+  
+  if (imageUrl) {
+    if (!imageUrl.startsWith('http')) {
+      // 相对路径，转换为完整 URL
+      if (imageUrl.startsWith('/')) {
+        imageUrl = `https://www.kinkoshioji.co.jp${imageUrl}`;
+      } else {
+        imageUrl = `https://www.kinkoshioji.co.jp/img/goods/${imageUrl}`;
+      }
+    }
+  } else {
+    // 没有图片时使用 SVG 占位图
+    imageUrl = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQ4IiBoZWlnaHQ9IjEyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjQ4IiBoZWlnaHQ9IjEyMCIgZmlsbD0iI2Y1ZjVmNSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj7lm77niYfliqDovb3lpLHotKU8L3RleHQ+PC9zdmc+';
+  }
   
   const priceBoxClass = product.isNewPrice ? 'price_box_ari' : 'price_box_nashi';
   const priceTextClass = product.isNewPrice ? 'henko_ari' : 'henko_nashi';
@@ -31,12 +44,15 @@ function createProductCard(product) {
     ? '<div class="leftbox"><img alt="" src="kaitori/img/nprice.png" width="56" height="15"></div>'
     : '<div class="leftbox"><img alt="" src="kaitori/img/dummy.png" width="56" height="15"></div>';
 
+  // SVG 占位图（base64）
+  const placeholderSvg = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQ4IiBoZWlnaHQ9IjEyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjQ4IiBoZWlnaHQ9IjEyMCIgZmlsbD0iI2Y1ZjVmNSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj7lm77niYfliqDovb3lpLHotKU8L3RleHQ+PC9zdmc+';
+
   return `
     <div class="kaitori_box">
       <div class="kaitori_item">${product.nameJa || product.name}</div>
       <div class="kaitori_img">
         <img alt="${product.nameJa || product.name}" src="${imageUrl}" width="248" height="120" 
-             onerror="this.src='img/goods/placeholder.jpg'">
+             onerror="this.onerror=null; this.src='${placeholderSvg}'">
       </div>
       <div class="${priceBoxClass}">
         ${newPriceBadge}
