@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd'
 import ProductCard from './components/ProductCard'
 import ProductModal from './components/ProductModal'
@@ -12,10 +13,28 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [editingProduct, setEditingProduct] = useState<Product | null>(null)
+  const [authenticated, setAuthenticated] = useState(false)
+  const router = useRouter()
 
   useEffect(() => {
-    loadProducts()
-  }, [])
+    // 检查登录状态
+    if (typeof window !== 'undefined') {
+      const isAuth = localStorage.getItem('admin_authenticated') === 'true'
+      if (!isAuth) {
+        router.push('/login')
+        return
+      }
+      setAuthenticated(true)
+      loadProducts()
+    }
+  }, [router])
+
+  const handleLogout = () => {
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('admin_authenticated')
+      router.push('/login')
+    }
+  }
 
   const loadProducts = async () => {
     try {
@@ -88,11 +107,28 @@ export default function Home() {
     }
   }
 
+  if (!authenticated) {
+    return (
+      <div className="loading">認証中...</div>
+    )
+  }
+
   return (
     <div className="container">
       <div className="header">
-        <h1>商品管理システム</h1>
-        <p>商品の追加、編集、削除ができます</p>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div>
+            <h1>商品管理システム</h1>
+            <p>商品の追加、編集、削除ができます</p>
+          </div>
+          <button
+            onClick={handleLogout}
+            className="btn btn-secondary"
+            style={{ marginTop: '0' }}
+          >
+            ログアウト
+          </button>
+        </div>
       </div>
 
       {error && (
