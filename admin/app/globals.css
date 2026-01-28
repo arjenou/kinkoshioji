@@ -53,16 +53,35 @@ a {
   margin-bottom: 30px;
 }
 
+/* 拖拽时的样式 */
+.products-grid [data-rbd-draggable-context-id] {
+  cursor: grab;
+}
+
+.products-grid [data-rbd-draggable-context-id]:active {
+  cursor: grabbing;
+}
+
 .product-card {
   background: white;
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 15px;
   transition: box-shadow 0.3s;
+  position: relative;
 }
 
 .product-card:hover {
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.drag-handle:hover {
+  color: #333;
+  cursor: grabbing !important;
+}
+
+.drag-handle:active {
+  cursor: grabbing !important;
 }
 
 .product-image {

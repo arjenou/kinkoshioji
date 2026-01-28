@@ -17,6 +17,7 @@ export interface Product {
   price: number;
   unit: string; // 'kg' or '台' or '個'
   isNewPrice: boolean;
+  order: number; // 排序顺序
   createdAt: string;
   updatedAt: string;
 }
@@ -62,7 +63,16 @@ async function getProducts(env: Env): Promise<Product[]> {
       return [];
     }
     const text = await object.text();
-    return JSON.parse(text);
+    const products = JSON.parse(text);
+    // 按 order 字段排序，如果没有 order 则按创建时间排序
+    return products.sort((a: Product, b: Product) => {
+      if (a.order !== undefined && b.order !== undefined) {
+        return a.order - b.order;
+      }
+      if (a.order !== undefined) return -1;
+      if (b.order !== undefined) return 1;
+      return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+    });
   } catch (error) {
     console.error('Error reading products:', error);
     return [];
@@ -99,6 +109,11 @@ export default {
         const data = await request.json();
         const products = await getProducts(env);
         
+        const products = await getProducts(env);
+        const maxOrder = products.length > 0 
+          ? Math.max(...products.map(p => p.order || 0))
+          : -1;
+        
         const newProduct: Product = {
           id: crypto.randomUUID(),
           name: data.name || '',
@@ -107,11 +122,14 @@ export default {
           price: data.price || 0,
           unit: data.unit || 'kg',
           isNewPrice: data.isNewPrice || false,
+          order: data.order !== undefined ? data.order : maxOrder + 1,
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
         };
 
         products.push(newProduct);
+        // 重新排序
+        products.sort((a, b) => (a.order || 0) - (b.order || 0));
         await saveProducts(products, env);
         
         return jsonResponse({ product: newProduct }, 201);
@@ -143,8 +161,47 @@ export default {
           updatedAt: new Date().toISOString(),
         };
 
+        // 如果更新了 order，需要重新排序
+        if (data.order !== undefined) {
+          products.sort((a, b) => (a.order || 0) - (b.order || 0));
+        }
         await saveProducts(products, env);
         return jsonResponse({ product: products[index] });
+      } catch (error) {
+        return errorResponse('Invalid request body', 400);
+      }
+    }
+
+    // PUT /api/products/reorder - 批量更新排序顺序
+    if (request.method === 'PUT' && path === '/api/products/reorder') {
+      if (!checkAuth(request, env)) {
+        return errorResponse('Unauthorized', 401);
+      }
+
+      try {
+        const data = await request.json();
+        const { productIds } = data; // 按新顺序排列的商品 ID 数组
+        
+        if (!Array.isArray(productIds)) {
+          return errorResponse('productIds must be an array', 400);
+        }
+
+        const products = await getProducts(env);
+        
+        // 更新每个商品的 order
+        productIds.forEach((id: string, index: number) => {
+          const product = products.find(p => p.id === id);
+          if (product) {
+            product.order = index;
+            product.updatedAt = new Date().toISOString();
+          }
+        });
+
+        // 重新排序并保存
+        products.sort((a, b) => (a.order || 0) - (b.order || 0));
+        await saveProducts(products, env);
+        
+        return jsonResponse({ success: true, products });
       } catch (error) {
         return errorResponse('Invalid request body', 400);
       }

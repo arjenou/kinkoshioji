@@ -18,6 +18,7 @@ export interface Product {
   price: number
   unit: string
   isNewPrice: boolean
+  order?: number
   createdAt: string
   updatedAt: string
 }
@@ -81,4 +82,17 @@ export async function uploadImage(file: File): Promise<{ url: string; filename: 
     }
   )
   return response.data
+}
+
+export async function reorderProducts(productIds: string[]): Promise<Product[]> {
+  const response = await api.put<{ products: Product[] }>(
+    '/api/products/reorder',
+    { productIds },
+    {
+      headers: {
+        Authorization: `Bearer ${ADMIN_TOKEN}`,
+      },
+    }
+  )
+  return response.data.products
 }

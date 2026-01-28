@@ -1,9 +1,10 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd'
 import ProductCard from './components/ProductCard'
 import ProductModal from './components/ProductModal'
-import { Product, getProducts, deleteProduct } from './lib/api'
+import { Product, getProducts, deleteProduct, reorderProducts } from './lib/api'
 
 export default function Home() {
   const [products, setProducts] = useState<Product[]>([])
@@ -64,6 +65,29 @@ export default function Home() {
     handleModalClose()
   }
 
+  const handleDragEnd = async (result: DropResult) => {
+    if (!result.destination) {
+      return
+    }
+
+    const items = Array.from(products)
+    const [reorderedItem] = items.splice(result.source.index, 1)
+    items.splice(result.destination.index, 0, reorderedItem)
+
+    // 更新本地状态
+    setProducts(items)
+
+    // 更新服务器排序
+    try {
+      const productIds = items.map(item => item.id)
+      await reorderProducts(productIds)
+    } catch (err) {
+      console.error('Failed to reorder products:', err)
+      // 如果失败，重新加载
+      loadProducts()
+    }
+  }
+
   return (
     <div className="container">
       <div className="header">
@@ -87,16 +111,41 @@ export default function Home() {
       {loading ? (
         <div className="loading">読み込み中...</div>
       ) : (
-        <div className="products-grid">
-          {products.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              onEdit={handleEditProduct}
-              onDelete={handleDeleteProduct}
-            />
-          ))}
-        </div>
+        <DragDropContext onDragEnd={handleDragEnd}>
+          <Droppable droppableId="products">
+            {(provided) => (
+              <div
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+                className="products-grid"
+              >
+                {products.map((product, index) => (
+                  <Draggable key={product.id} draggableId={product.id} index={index}>
+                    {(provided, snapshot) => (
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        style={{
+                          ...provided.draggableProps.style,
+                          opacity: snapshot.isDragging ? 0.8 : 1,
+                          zIndex: snapshot.isDragging ? 1000 : 1,
+                        }}
+                      >
+                        <ProductCard
+                          product={product}
+                          onEdit={handleEditProduct}
+                          onDelete={handleDeleteProduct}
+                          dragHandleProps={provided.dragHandleProps}
+                        />
+                      </div>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
       )}
 
       {isModalOpen && (

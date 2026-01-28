@@ -7,9 +7,10 @@ interface ProductCardProps {
   product: Product
   onEdit: (product: Product) => void
   onDelete: (id: string) => void
+  dragHandleProps?: any
 }
 
-export default function ProductCard({ product, onEdit, onDelete }: ProductCardProps) {
+export default function ProductCard({ product, onEdit, onDelete, dragHandleProps }: ProductCardProps) {
   // 处理图片 URL
   let imageUrl = product.imageUrl;
   
@@ -29,6 +30,26 @@ export default function ProductCard({ product, onEdit, onDelete }: ProductCardPr
 
   return (
     <div className="product-card">
+      {/* 拖拽手柄 */}
+      {dragHandleProps && (
+        <div
+          {...dragHandleProps}
+          className="drag-handle"
+          style={{
+            position: 'absolute',
+            top: '5px',
+            right: '5px',
+            cursor: 'grab',
+            padding: '5px',
+            fontSize: '18px',
+            color: '#999',
+            userSelect: 'none',
+          }}
+          title="拖拽排序"
+        >
+          ⋮⋮
+        </div>
+      )}
       <img 
         src={imageUrl} 
         alt={product.nameJa || product.name}
