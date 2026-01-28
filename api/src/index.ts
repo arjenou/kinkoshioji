@@ -137,8 +137,67 @@ export default {
       }
     }
 
+    // PUT /api/products/reorder - 批量更新排序顺序
+    if (request.method === 'PUT' && path === '/api/products/reorder') {
+      if (!checkAuth(request, env)) {
+        return errorResponse('Unauthorized', 401);
+      }
+
+      try {
+        const data = await request.json();
+        const { productIds } = data; // 按新顺序排列的商品 ID 数组
+        
+        if (!Array.isArray(productIds)) {
+          return errorResponse('productIds must be an array', 400);
+        }
+
+        // 直接读取原始数据（不排序）
+        let allProducts: Product[];
+        try {
+          const object = await env.PRODUCTS_BUCKET.get('products.json');
+          if (!object) {
+            return errorResponse('No products found', 404);
+          }
+          const text = await object.text();
+          allProducts = JSON.parse(text);
+        } catch (error) {
+          return errorResponse('Failed to read products', 500);
+        }
+        
+        // 更新每个商品的 order
+        const foundIds = new Set<string>();
+        productIds.forEach((id: string, index: number) => {
+          const product = allProducts.find(p => p.id === id);
+          if (product) {
+            product.order = index;
+            product.updatedAt = new Date().toISOString();
+            foundIds.add(id);
+          }
+        });
+
+        // 为没有在 productIds 中的商品设置默认值（放在最后）
+        let maxOrder = productIds.length;
+        allProducts.forEach((product) => {
+          if (!foundIds.has(product.id)) {
+            if (product.order === undefined) {
+              product.order = maxOrder++;
+            }
+          }
+        });
+
+        // 重新排序并保存
+        allProducts.sort((a, b) => (a.order || 0) - (b.order || 0));
+        await saveProducts(allProducts, env);
+        
+        return jsonResponse({ success: true, products: allProducts });
+      } catch (error) {
+        console.error('Reorder error:', error);
+        return errorResponse('Invalid request body', 400);
+      }
+    }
+
     // PUT /api/products/:id - Update product
-    if (request.method === 'PUT' && path.startsWith('/api/products/')) {
+    if (request.method === 'PUT' && path.startsWith('/api/products/') && path !== '/api/products/reorder') {
       if (!checkAuth(request, env)) {
         return errorResponse('Unauthorized', 401);
       }
@@ -226,6 +285,74 @@ export default {
         return jsonResponse({ success: true, products: allProducts });
       } catch (error) {
         console.error('Reorder error:', error);
+        return errorResponse('Invalid request body', 400);
+      }
+    }
+
+    // PUT /api/products/:id - Update product
+    if (request.method === 'PUT' && path.startsWith('/api/products/') && path !== '/api/products/reorder') {
+      if (!checkAuth(request, env)) {
+        return errorResponse('Unauthorized', 401);
+      }
+
+      try {
+        const productId = path.split('/').pop();
+        const data = await request.json();
+        const existingProducts = await getProducts(env);
+        
+        const index = existingProducts.findIndex(p => p.id === productId);
+        if (index === -1) {
+          return errorResponse('Product not found', 404);
+        }
+
+        existingProducts[index] = {
+          ...existingProducts[index],
+          ...data,
+          id: existingProducts[index].id, // Preserve ID
+          updatedAt: new Date().toISOString(),
+        };
+
+        // 如果更新了 order，需要重新排序
+        if (data.order !== undefined) {
+          existingProducts.sort((a, b) => (a.order || 0) - (b.order || 0));
+        }
+        await saveProducts(existingProducts, env);
+        return jsonResponse({ product: existingProducts[index] });
+      } catch (error) {
+        return errorResponse('Invalid request body', 400);
+      }
+    }
+
+    // PUT /api/products/:id - Update product（必须在 reorder 之后检查）
+    if (request.method === 'PUT' && path.startsWith('/api/products/') && path !== '/api/products/reorder') {
+      if (!checkAuth(request, env)) {
+        return errorResponse('Unauthorized', 401);
+      }
+
+      try {
+        const productId = path.split('/').pop();
+        const data = await request.json();
+        const existingProducts = await getProducts(env);
+        
+        const index = existingProducts.findIndex(p => p.id === productId);
+        if (index === -1) {
+          return errorResponse('Product not found', 404);
+        }
+
+        existingProducts[index] = {
+          ...existingProducts[index],
+          ...data,
+          id: existingProducts[index].id, // Preserve ID
+          updatedAt: new Date().toISOString(),
+        };
+
+        // 如果更新了 order，需要重新排序
+        if (data.order !== undefined) {
+          existingProducts.sort((a, b) => (a.order || 0) - (b.order || 0));
+        }
+        await saveProducts(existingProducts, env);
+        return jsonResponse({ product: existingProducts[index] });
+      } catch (error) {
         return errorResponse('Invalid request body', 400);
       }
     }
