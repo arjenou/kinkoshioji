@@ -33,7 +33,7 @@ export async function getProducts(): Promise<ProductsResponse> {
 }
 
 export async function createProduct(product: Omit<Product, 'id' | 'createdAt' | 'updatedAt'>): Promise<Product> {
-  const response = await api.post<Product>(
+  const response = await api.post<{ product: Product }>(
     '/api/products',
     product,
     {
@@ -46,7 +46,7 @@ export async function createProduct(product: Omit<Product, 'id' | 'createdAt' | 
 }
 
 export async function updateProduct(id: string, product: Partial<Product>): Promise<Product> {
-  const response = await api.put<Product>(
+  const response = await api.put<{ product: Product }>(
     `/api/products/${id}`,
     product,
     {

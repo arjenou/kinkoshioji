@@ -5,7 +5,26 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "https://your-worker.your-subdomain.workers.dev/api/$1"
+      "destination": "https://api.kinkoshioji.co.jp/api/$1"
+    },
+    {
+      "source": "/admin",
+      "destination": "/admin/index.html"
+    },
+    {
+      "source": "/admin/:path*",
+      "destination": "/admin/:path*"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/admin/_next/static/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
     }
   ]
 }
