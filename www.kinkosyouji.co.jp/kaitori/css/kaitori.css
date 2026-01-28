@@ -132,6 +132,8 @@ body {
 .dummy-foot {
 	clear: both;
 	width: 100%;
+	height: 0;
+	overflow: hidden;
 }
 
 a {

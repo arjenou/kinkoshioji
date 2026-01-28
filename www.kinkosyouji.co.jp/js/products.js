@@ -89,6 +89,9 @@ async function renderProducts() {
       html += '<div class="dummy-foot"></div>';
     }
   });
+  
+  // 确保在所有产品卡片后添加清除浮动的元素
+  html += '<div class="dummy-foot"></div>';
 
   container.innerHTML = html;
 }
