@@ -147,26 +147,26 @@ export default {
       try {
         const productId = path.split('/').pop();
         const data = await request.json();
-        const products = await getProducts(env);
+        const existingProducts = await getProducts(env);
         
-        const index = products.findIndex(p => p.id === productId);
+        const index = existingProducts.findIndex(p => p.id === productId);
         if (index === -1) {
           return errorResponse('Product not found', 404);
         }
 
-        products[index] = {
-          ...products[index],
+        existingProducts[index] = {
+          ...existingProducts[index],
           ...data,
-          id: products[index].id, // Preserve ID
+          id: existingProducts[index].id, // Preserve ID
           updatedAt: new Date().toISOString(),
         };
 
         // 如果更新了 order，需要重新排序
         if (data.order !== undefined) {
-          products.sort((a, b) => (a.order || 0) - (b.order || 0));
+          existingProducts.sort((a, b) => (a.order || 0) - (b.order || 0));
         }
-        await saveProducts(products, env);
-        return jsonResponse({ product: products[index] });
+        await saveProducts(existingProducts, env);
+        return jsonResponse({ product: existingProducts[index] });
       } catch (error) {
         return errorResponse('Invalid request body', 400);
       }
@@ -187,21 +187,21 @@ export default {
         }
 
         // 直接读取原始数据（不排序）
-        let products: Product[];
+        let allProducts: Product[];
         try {
           const object = await env.PRODUCTS_BUCKET.get('products.json');
           if (!object) {
             return errorResponse('No products found', 404);
           }
           const text = await object.text();
-          products = JSON.parse(text);
+          allProducts = JSON.parse(text);
         } catch (error) {
           return errorResponse('Failed to read products', 500);
         }
         
         // 更新每个商品的 order
         productIds.forEach((id: string, index: number) => {
-          const product = products.find(p => p.id === id);
+          const product = allProducts.find(p => p.id === id);
           if (product) {
             product.order = index;
             product.updatedAt = new Date().toISOString();
@@ -209,17 +209,17 @@ export default {
         });
 
         // 为没有 order 的商品设置默认值
-        products.forEach((product, index) => {
+        allProducts.forEach((product, index) => {
           if (product.order === undefined) {
             product.order = productIds.length + index;
           }
         });
 
         // 重新排序并保存
-        products.sort((a, b) => (a.order || 0) - (b.order || 0));
-        await saveProducts(products, env);
+        allProducts.sort((a, b) => (a.order || 0) - (b.order || 0));
+        await saveProducts(allProducts, env);
         
-        return jsonResponse({ success: true, products });
+        return jsonResponse({ success: true, products: allProducts });
       } catch (error) {
         console.error('Reorder error:', error);
         return errorResponse('Invalid request body', 400);
@@ -233,10 +233,10 @@ export default {
       }
 
       const productId = path.split('/').pop();
-      const products = await getProducts(env);
+      const existingProducts = await getProducts(env);
       
-      const filtered = products.filter(p => p.id !== productId);
-      if (filtered.length === products.length) {
+      const filtered = existingProducts.filter(p => p.id !== productId);
+      if (filtered.length === existingProducts.length) {
         return errorResponse('Product not found', 404);
       }
 
