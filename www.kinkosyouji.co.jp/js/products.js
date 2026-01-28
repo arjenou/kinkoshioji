@@ -48,14 +48,14 @@ function createProductCard(product) {
     : '<div class="leftbox"><img alt="" src="kaitori/img/dummy.png" width="56" height="15"></div>';
 
   return `
-    <div class="kaitori_box" style="display: flex; flex-direction: column;">
-      <div class="kaitori_item" style="width: 100%; margin-bottom: 5px;">${product.nameJa || product.name}</div>
-      <div class="kaitori_img" style="width: 100%; margin-bottom: 5px;">
+    <div class="kaitori_box">
+      <div class="kaitori_item">${product.nameJa || product.name}</div>
+      <div class="kaitori_img">
         <img alt="${product.nameJa || product.name}" src="${imageUrl}" width="248" height="120" 
-             style="width: 100%; max-width: 248px; height: 120px; object-fit: cover; background-color: #f5f5f5; display: block;"
-             onerror="this.onerror=null; this.src='${placeholderSvg}'">
+             onerror="this.onerror=null; this.src='${placeholderSvg}'"
+             style="object-fit: cover; background-color: #f5f5f5;">
       </div>
-      <div class="${priceBoxClass}" style="width: 100%; margin-top: auto;">
+      <div class="${priceBoxClass}">
         ${newPriceBadge}
         <div class="rightbox">
           <span class="${priceTextClass}">${formatPrice(product.price)}円</span>／${product.unit}
