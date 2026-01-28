@@ -107,11 +107,10 @@ export default {
 
       try {
         const data = await request.json();
-        const products = await getProducts(env);
+        const existingProducts = await getProducts(env);
         
-        const products = await getProducts(env);
-        const maxOrder = products.length > 0 
-          ? Math.max(...products.map(p => p.order || 0))
+        const maxOrder = existingProducts.length > 0 
+          ? Math.max(...existingProducts.map(p => p.order || 0))
           : -1;
         
         const newProduct: Product = {
@@ -127,10 +126,10 @@ export default {
           updatedAt: new Date().toISOString(),
         };
 
-        products.push(newProduct);
+        existingProducts.push(newProduct);
         // 重新排序
-        products.sort((a, b) => (a.order || 0) - (b.order || 0));
-        await saveProducts(products, env);
+        existingProducts.sort((a, b) => (a.order || 0) - (b.order || 0));
+        await saveProducts(existingProducts, env);
         
         return jsonResponse({ product: newProduct }, 201);
       } catch (error) {
