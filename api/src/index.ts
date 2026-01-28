@@ -199,18 +199,23 @@ export default {
         }
         
         // 更新每个商品的 order
+        const foundIds = new Set<string>();
         productIds.forEach((id: string, index: number) => {
           const product = allProducts.find(p => p.id === id);
           if (product) {
             product.order = index;
             product.updatedAt = new Date().toISOString();
+            foundIds.add(id);
           }
         });
 
-        // 为没有 order 的商品设置默认值
-        allProducts.forEach((product, index) => {
-          if (product.order === undefined) {
-            product.order = productIds.length + index;
+        // 为没有在 productIds 中的商品设置默认值（放在最后）
+        let maxOrder = productIds.length;
+        allProducts.forEach((product) => {
+          if (!foundIds.has(product.id)) {
+            if (product.order === undefined) {
+              product.order = maxOrder++;
+            }
           }
         });
 
