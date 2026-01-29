@@ -1,9 +1,10 @@
 /**
  * Contact form submission handler
- * Sends form data to Cloudflare Workers API
+ * Sends form data to same-origin /api/contact (Vercel Serverless)
  */
 
-const API_URL = 'https://api.kinkoshioji.co.jp';
+// 使用同源 API，避免 404（不依赖 Cloudflare Workers）
+const API_URL = typeof window !== 'undefined' && window.location.origin ? window.location.origin : '';
 
 $(document).ready(function() {
   // 查找联系表单（优先使用ID，如果没有则查找包含postmail的action）
@@ -73,7 +74,7 @@ $(document).ready(function() {
     contactForm.after(loadingMessage);
 
     try {
-      const response = await fetch(`${API_URL}/api/contact`, {
+      const response = await fetch(`${API_URL || ''}/api/contact`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
