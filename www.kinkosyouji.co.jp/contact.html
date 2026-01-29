@@ -56,6 +56,18 @@ nav a:hover {
 		font-size: 14px !important;
 	}
 }
+
+/* QRコードのレスポンシブ対応 */
+@media (max-width: 768px) {
+	.qr-code-container {
+		flex-direction: column !important;
+		gap: 40px !important;
+	}
+	
+	.qr-code-container img {
+		max-width: 180px !important;
+	}
+}
 </style>
 
 <script src="../ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -141,6 +153,26 @@ nav a:hover {
 
 <div style="padding-top:50px;"></div>
 					<p>個人情報の取扱いについて<br>ご記入いただいた個人情報は、お問い合わせへの対応および確認のためのみに利用します。<br>また、この目的のためにお問い合わせの記録を残すことがあります。</p><br>
+
+				<!-- LINE・WeChat QRコード -->
+				<div style="padding-top:50px; text-align: center;">
+					<h2 style="margin-bottom: 30px; font-size: 24px; color: #333;">■&nbsp;LINE・WeChatでのお問い合わせ</h2>
+					<div class="qr-code-container" style="display: flex; justify-content: center; align-items: flex-start; gap: 60px; flex-wrap: wrap; margin-top: 30px;">
+						<div style="text-align: center; display: flex; flex-direction: column; align-items: center; min-height: 300px;">
+							<p style="margin-bottom: 15px; font-size: 18px; font-weight: bold; color: #333; height: 27px; line-height: 27px; flex-shrink: 0;">LINE</p>
+							<div style="flex: 1; display: flex; align-items: center; justify-content: center;">
+								<img src="img/contact/line-code.jpg" alt="LINE QRコード" style="max-width: 200px; height: auto; border: 2px solid #ddd; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+							</div>
+						</div>
+						<div style="text-align: center; display: flex; flex-direction: column; align-items: center; min-height: 300px;">
+							<p style="margin-bottom: 15px; font-size: 18px; font-weight: bold; color: #333; height: 27px; line-height: 27px; flex-shrink: 0;">WeChat</p>
+							<div style="flex: 1; display: flex; align-items: center; justify-content: center;">
+								<img src="img/contact/wechat-code.jpg" alt="WeChat QRコード" style="max-width: 200px; height: auto; border: 2px solid #ddd; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+							</div>
+						</div>
+					</div>
+					<p style="margin-top: 30px; color: #666; font-size: 14px;">上記のQRコードをスキャンして、LINEまたはWeChatでお問い合わせください。</p>
+				</div>
 
 				</div><!-- /cont_box -->
 
