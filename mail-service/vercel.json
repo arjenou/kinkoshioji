@@ -1,0 +1,29 @@
+{
+  "version": 2,
+  "functions": {
+    "api/send.js": {
+      "maxDuration": 30
+    },
+    "api/health.js": {
+      "maxDuration": 10
+    }
+  },
+  "routes": [
+    {
+      "src": "/api/send",
+      "dest": "/api/send.js"
+    },
+    {
+      "src": "/api/health",
+      "dest": "/api/health.js"
+    },
+    {
+      "src": "/health",
+      "dest": "/api/health.js"
+    },
+    {
+      "src": "/send",
+      "dest": "/api/send.js"
+    }
+  ]
+}

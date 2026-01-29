@@ -7,6 +7,10 @@ export interface Env {
   PRODUCTS_BUCKET: R2Bucket;
   IMAGES_BUCKET: R2Bucket;
   ADMIN_TOKEN: string;
+  GMAIL_USER: string; // Gmail 邮箱地址（发送者）
+  GMAIL_APP_PASSWORD: string; // Gmail 应用密钥（16位）
+  CONTACT_EMAIL: string; // 接收联系表单的邮箱地址
+  MAIL_SERVICE_URL: string; // 邮件服务 URL（Gmail SMTP 服务）
 }
 
 export interface Product {
@@ -81,6 +85,100 @@ async function getProducts(env: Env): Promise<Product[]> {
 
 async function saveProducts(products: Product[], env: Env): Promise<void> {
   await env.PRODUCTS_BUCKET.put('products.json', JSON.stringify(products, null, 2));
+}
+
+/**
+ * Send email using Gmail SMTP via our mail service
+ * 直接使用 Gmail 应用密钥通过独立的邮件服务发送
+ */
+async function sendEmailViaGmailSMTP(
+  fromEmail: string,
+  toEmail: string,
+  replyTo: string,
+  subject: string,
+  formData: {
+    name: string;
+    email: string;
+    tel?: string;
+    company?: string;
+    address?: string;
+    message: string;
+  },
+  env: Env
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    // 准备邮件内容
+    const emailBody = `
+お問い合わせ内容：
+
+お名前: ${formData.name}
+メールアドレス: ${formData.email}
+電話番号: ${formData.tel || '未入力'}
+会社名: ${formData.company || '未入力'}
+住所: ${formData.address || '未入力'}
+
+お問い合わせ内容:
+${formData.message}
+
+---
+このメールは ${new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' })} に送信されました。
+    `.trim();
+
+    const emailHtml = `
+<h2>お問い合わせ内容</h2>
+<p><strong>お名前:</strong> ${formData.name}</p>
+<p><strong>メールアドレス:</strong> ${formData.email}</p>
+<p><strong>電話番号:</strong> ${formData.tel || '未入力'}</p>
+<p><strong>会社名:</strong> ${formData.company || '未入力'}</p>
+<p><strong>住所:</strong> ${formData.address || '未入力'}</p>
+<hr>
+<h3>お問い合わせ内容:</h3>
+<p>${formData.message.replace(/\n/g, '<br>')}</p>
+<hr>
+<p><small>このメールは ${new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' })} に送信されました。</small></p>
+    `.trim();
+
+    // 调用邮件服务
+    const mailServiceUrl = env.MAIL_SERVICE_URL || 'http://localhost:3001';
+    const mailResponse = await fetch(`${mailServiceUrl}/send`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        to: toEmail,
+        replyTo: replyTo,
+        subject: subject,
+        text: emailBody,
+        html: emailHtml,
+        formData: formData,
+      }),
+    });
+
+    if (!mailResponse.ok) {
+      const errorText = await mailResponse.text();
+      let errorMessage = errorText;
+      try {
+        const errorJson = JSON.parse(errorText);
+        errorMessage = errorJson.error || errorText;
+      } catch {
+        // Keep original error text
+      }
+      return { success: false, error: errorMessage };
+    }
+
+    const result = await mailResponse.json();
+    if (!result.success) {
+      return { success: false, error: result.error || 'Email sending failed' };
+    }
+
+    return { success: true };
+  } catch (error) {
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Unknown error',
+    };
+  }
 }
 
 export default {
@@ -430,6 +528,52 @@ export default {
       return new Response(object.body, {
         headers,
       });
+    }
+
+    // POST /api/contact - Send contact form email
+    if (request.method === 'POST' && path === '/api/contact') {
+      try {
+        const data = await request.json();
+        const { name, email, tel, company, address, message } = data;
+
+        // Validate required fields
+        if (!name || !email || !message) {
+          return errorResponse('名前、メールアドレス、お問い合わせ内容は必須です', 400);
+        }
+
+        // Validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          return errorResponse('有効なメールアドレスを入力してください', 400);
+        }
+
+        // Prepare email subject
+        const emailSubject = `【お問い合わせ】${name}様からのお問い合わせ`;
+
+        // Send email using Gmail SMTP via our mail service
+        // Directly uses Gmail app password
+        const emailResponse = await sendEmailViaGmailSMTP(
+          env.GMAIL_USER,
+          env.CONTACT_EMAIL || env.GMAIL_USER,
+          email,
+          emailSubject,
+          { name, email, tel, company, address, message },
+          env
+        );
+
+        if (!emailResponse.success) {
+          console.error('Email send error:', emailResponse.error);
+          return errorResponse('メールの送信に失敗しました。しばらくしてから再度お試しください。', 500);
+        }
+
+        return jsonResponse({ 
+          success: true, 
+          message: 'お問い合わせを受け付けました。ありがとうございます。' 
+        });
+      } catch (error) {
+        console.error('Contact form error:', error);
+        return errorResponse('リクエストの処理中にエラーが発生しました', 500);
+      }
     }
 
     return errorResponse('Not found', 404);
