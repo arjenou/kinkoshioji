@@ -2,7 +2,23 @@
   "buildCommand": null,
   "outputDirectory": ".",
   "framework": null,
+  "functions": {
+    "api/send.js": {
+      "maxDuration": 30
+    },
+    "api/health.js": {
+      "maxDuration": 10
+    }
+  },
   "rewrites": [
+    {
+      "source": "/api/send",
+      "destination": "/api/send"
+    },
+    {
+      "source": "/api/health",
+      "destination": "/api/health"
+    },
     {
       "source": "/api/(.*)",
       "destination": "https://api.kinkoshioji.co.jp/api/$1"

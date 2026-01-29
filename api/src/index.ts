@@ -138,9 +138,9 @@ ${formData.message}
 <p><small>このメールは ${new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' })} に送信されました。</small></p>
     `.trim();
 
-    // 调用邮件服务
-    const mailServiceUrl = env.MAIL_SERVICE_URL || 'http://localhost:3001';
-    const mailResponse = await fetch(`${mailServiceUrl}/send`, {
+    // 调用邮件服务（部署在 Vercel 上的邮件服务）
+    const mailServiceUrl = env.MAIL_SERVICE_URL || 'https://www.kinkoshioji.co.jp';
+    const mailResponse = await fetch(`${mailServiceUrl}/api/send`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

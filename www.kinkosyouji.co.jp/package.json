@@ -1,0 +1,8 @@
+{
+  "name": "kinkoshioji-website",
+  "version": "1.0.0",
+  "description": "Kinkoshioji website with Gmail mail service",
+  "dependencies": {
+    "nodemailer": "^6.9.8"
+  }
+}
