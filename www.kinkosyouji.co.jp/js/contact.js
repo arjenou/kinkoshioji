@@ -16,12 +16,15 @@ $(document).ready(function() {
     return;
   }
 
-  // 确保表单action是安全的
-  contactForm.attr('action', '#');
-  contactForm.attr('method', 'post');
+  // 确保表单action是安全的（双重保护）
+  contactForm.attr('action', 'javascript:void(0);');
+  contactForm.attr('onsubmit', 'return false;');
   
-  contactForm.on('submit', async function(e) {
+  // 确保阻止默认提交行为
+  contactForm.off('submit').on('submit', async function(e) {
     e.preventDefault();
+    e.stopPropagation();
+    e.stopImmediatePropagation();
     
     // Get form data
     const formData = {
