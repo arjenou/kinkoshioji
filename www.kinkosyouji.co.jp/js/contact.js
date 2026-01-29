@@ -6,6 +6,20 @@
 // 使用同源 API，避免 404（不依赖 Cloudflare Workers）
 const API_URL = typeof window !== 'undefined' && window.location.origin ? window.location.origin : '';
 
+/** 在表单下部显示提示（成功为绿色，失败为红色），不弹框 */
+function showContactMessage(text, isSuccess) {
+  var $msg = $('#contact-message');
+  $msg.html(text).removeClass('contact-message-success contact-message-error');
+  $msg.addClass(isSuccess ? 'contact-message-success' : 'contact-message-error');
+  $msg.css({
+    'display': 'block',
+    'background-color': isSuccess ? '#e8f5e9' : '#ffebee',
+    'color': isSuccess ? '#2e7d32' : '#c62828',
+    'border': '1px solid ' + (isSuccess ? '#a5d6a7' : '#ef9a9a')
+  });
+  $msg.show();
+}
+
 $(document).ready(function() {
   // 查找联系表单（优先使用ID，如果没有则查找包含postmail的action）
   const contactForm = $('#contact-form').length > 0 
@@ -37,15 +51,18 @@ $(document).ready(function() {
       message: $('textarea[name="お問い合わせ内容"]').val() || ''
     };
 
+    // 隐藏之前的提示
+    $('#contact-message').hide().removeClass('contact-message-success contact-message-error').empty();
+
     // Validate required fields
     if (!formData.name.trim()) {
-      alert('お名前を入力してください。');
+      showContactMessage('お名前を入力してください。', false);
       $('input[name="name"]').focus();
       return;
     }
 
     if (!formData.email.trim()) {
-      alert('メールアドレスを入力してください。');
+      showContactMessage('メールアドレスを入力してください。', false);
       $('input[name="email"]').focus();
       return;
     }
@@ -53,13 +70,13 @@ $(document).ready(function() {
     // Basic email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
-      alert('有効なメールアドレスを入力してください。');
+      showContactMessage('有効なメールアドレスを入力してください。', false);
       $('input[name="email"]').focus();
       return;
     }
 
     if (!formData.message.trim()) {
-      alert('お問い合わせ内容を入力してください。');
+      showContactMessage('お問い合わせ内容を入力してください。', false);
       $('textarea[name="お問い合わせ内容"]').focus();
       return;
     }
@@ -88,20 +105,20 @@ $(document).ready(function() {
       $('#contact-loading').remove();
 
       if (response.ok && result.success) {
-        // Success
-        alert('お問い合わせを受け付けました。ありがとうございます。\n担当者よりご連絡させていただきます。');
+        // Success - 在页面下部显示提示，不弹框
         contactForm[0].reset();
+        showContactMessage('お問い合わせを受け付けました。ありがとうございます。<br>担当者よりご連絡させていただきます。', true);
+        $('html, body').animate({ scrollTop: $('#contact-message').offset().top - 80 }, 400);
       } else {
         // Error
         const errorMessage = result.error || 'メールの送信に失敗しました。しばらくしてから再度お試しください。';
-        alert('エラー: ' + errorMessage);
+        showContactMessage(errorMessage, false);
       }
     } catch (error) {
       // Remove loading message
       $('#contact-loading').remove();
-      
       console.error('Contact form error:', error);
-      alert('ネットワークエラーが発生しました。インターネット接続を確認してから再度お試しください。');
+      showContactMessage('ネットワークエラーが発生しました。インターネット接続を確認してから再度お試しください。', false);
     } finally {
       // Re-enable submit button
       submitButton.prop('disabled', false).val(originalValue);
