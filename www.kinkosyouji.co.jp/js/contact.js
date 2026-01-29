@@ -6,14 +6,17 @@
 const API_URL = 'https://api.kinkoshioji.co.jp';
 
 $(document).ready(function() {
-  const contactForm = $('form[action*="postmail"]');
+  // 查找联系表单（优先使用ID，如果没有则查找包含postmail的action）
+  const contactForm = $('#contact-form').length > 0 
+    ? $('#contact-form') 
+    : $('form[action*="postmail"]');
   
   if (contactForm.length === 0) {
     console.error('Contact form not found');
     return;
   }
 
-  // Update form action and add submit handler
+  // 确保表单action是安全的
   contactForm.attr('action', '#');
   contactForm.attr('method', 'post');
   
